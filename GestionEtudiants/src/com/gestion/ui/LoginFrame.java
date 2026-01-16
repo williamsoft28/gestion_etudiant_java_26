@@ -18,9 +18,11 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // Panel principal
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(new Color(240, 242, 245));
 
+        // Carte interne
         JPanel card = new JPanel();
         card.setBackground(Color.WHITE);
         card.setPreferredSize(new Dimension(330, 200));
@@ -30,7 +32,6 @@ public class LoginFrame extends JFrame {
         JLabel title = new JLabel("Connexion", JLabel.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 20));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         card.add(title);
         card.add(Box.createVerticalStrut(15));
 
@@ -54,12 +55,12 @@ public class LoginFrame extends JFrame {
         btnLogin.setFocusPainted(false);
         btnLogin.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         card.add(btnLogin);
 
         mainPanel.add(card);
         add(mainPanel);
 
+        // Action du bouton login
         btnLogin.addActionListener(e -> seConnecter());
 
         setVisible(true);
@@ -69,30 +70,47 @@ public class LoginFrame extends JFrame {
         String user = userField.getText().trim();
         String pass = new String(passField.getPassword());
 
-        if (user.isEmpty()) {
+        if (user.isEmpty() || pass.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "Veuillez entrer votre matricule",
-                    "Champ requis",
+                    "Veuillez remplir tous les champs",
+                    "Erreur",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (user.equals(AdminConfig.USERNAME)
-                && pass.equals(AdminConfig.PASSWORD)) {
-            new AdminFrame();
-            dispose();
+        // Login Admin
+        if (user.equals(AdminConfig.USERNAME) && pass.equals(AdminConfig.PASSWORD)) {
+            try {
+                new AdminFrame(); // Dashboard Admin
+                dispose();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this,
+                        "Erreur lors de l'ouverture de l'espace Admin",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
+            }
             return;
         }
 
-        EtudiantDAO dao = new EtudiantDAO();
-        Etudiant etudiant = dao.trouverParMatricule(user);
+        // Login Étudiant
+        try {
+            EtudiantDAO dao = new EtudiantDAO();
+            Etudiant etudiant = dao.trouverParMatricule(user);
 
-        if (etudiant != null) {
-            new EtudiantFrame(etudiant);
-            dispose();
-        } else {
+            if (etudiant != null) {
+                new EtudiantFrame(etudiant);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Identifiants incorrects",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "Identifiants incorrects",
+                    "Erreur lors de la connexion à la base de données",
                     "Erreur",
                     JOptionPane.ERROR_MESSAGE);
         }
