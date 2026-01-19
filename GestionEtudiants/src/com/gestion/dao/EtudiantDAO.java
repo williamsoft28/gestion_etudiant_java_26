@@ -2,7 +2,6 @@ package com.gestion.dao;
 
 import com.gestion.config.DatabaseConnection;
 import com.gestion.model.Etudiant;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

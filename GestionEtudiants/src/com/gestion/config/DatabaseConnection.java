@@ -5,17 +5,12 @@ import java.sql.DriverManager;
 
 public class DatabaseConnection {
 
-    private static final String URL =
-            "jdbc:mysql://localhost:3306/gestion_etudiants?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = ""; // vide avec Wamp par défaut
+    private static final String URL = "jdbc:sqlite:gestion_etudiants.db";
 
     public static Connection getConnection() {
         try {
-            // Charge le driver MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            Class.forName("org.sqlite.JDBC");
+            return DriverManager.getConnection(URL);
 
         } catch (Exception e) {
             System.out.println("❌ Erreur de connexion à la base de données");

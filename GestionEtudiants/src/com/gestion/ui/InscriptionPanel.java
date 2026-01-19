@@ -3,10 +3,9 @@ package com.gestion.ui;
 import com.gestion.dao.EtudiantDAO;
 import com.gestion.model.Etudiant;
 import com.gestion.utils.MatriculeGenerator;
-
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import javax.swing.*;
 
 public class InscriptionPanel extends JPanel {
 
