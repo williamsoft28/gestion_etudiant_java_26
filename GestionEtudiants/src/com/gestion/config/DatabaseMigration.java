@@ -10,11 +10,6 @@ public class DatabaseMigration {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
 
-            if (conn == null) {
-                System.out.println("❌ Connexion MySQL échouée, migration annulée");
-                return;
-            }
-
             String sql = "CREATE TABLE IF NOT EXISTS etudiants (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY," +
                     "nom VARCHAR(50) NOT NULL," +

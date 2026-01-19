@@ -55,4 +55,46 @@ public class EtudiantDAO {
         }
         return null;
     }
+
+    public java.util.List<Etudiant> findAll() {
+        String sql = "SELECT * FROM etudiants";
+        java.util.List<Etudiant> list = new java.util.ArrayList<>();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Etudiant e = new Etudiant();
+                e.setId(rs.getInt("id"));
+                e.setNom(rs.getString("nom"));
+                e.setPrenom(rs.getString("prenom"));
+                e.setMatricule(rs.getString("matricule"));
+                e.setFiliere(rs.getString("filiere"));
+                e.setTelephone(rs.getString("telephone"));
+                list.add(e);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public boolean supprimer(String matricule) {
+        String sql = "DELETE FROM etudiants WHERE matricule = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, matricule);
+            ps.executeUpdate();
+            return true;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

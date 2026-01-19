@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class InscriptionPanel extends JPanel {
 
-    private JTextField txtNom, txtPrenom, txtAnnee, txtMatricule;
+    private final JTextField txtNom, txtPrenom, txtAnnee, txtMatricule;
 
     public InscriptionPanel() {
         setLayout(new GridLayout(6, 2, 10, 10));

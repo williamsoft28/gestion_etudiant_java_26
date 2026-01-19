@@ -68,7 +68,7 @@ public class LoginFrame extends JFrame {
 
     private void seConnecter() {
         String user = userField.getText().trim();
-        String pass = new String(passField.getPassword());
+        String pass = new String(passField.getPassword()).trim();
 
         if (user.isEmpty() || pass.isEmpty()) {
             JOptionPane.showMessageDialog(this,
