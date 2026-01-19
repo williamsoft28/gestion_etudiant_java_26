@@ -8,6 +8,7 @@ public class Etudiant {
     private String matricule;
     private String filiere;
     private String telephone;
+    private java.time.LocalDate dateNaissance;
 
     public int getId() {
         return id;
@@ -55,5 +56,13 @@ public class Etudiant {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public java.time.LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(java.time.LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
     }
 }

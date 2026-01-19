@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 public class EtudiantDAO {
 
     public boolean ajouterEtudiant(Etudiant e) {
-        String sql = "INSERT INTO etudiants(nom, prenom, matricule, filiere, telephone) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO etudiants(nom, prenom, matricule, filiere, telephone, date_naissance) VALUES (?,?,?,?,?,?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -20,6 +20,7 @@ public class EtudiantDAO {
             ps.setString(3, e.getMatricule());
             ps.setString(4, e.getFiliere());
             ps.setString(5, e.getTelephone());
+            ps.setDate(6, e.getDateNaissance() != null ? java.sql.Date.valueOf(e.getDateNaissance()) : null);
 
             ps.executeUpdate();
             return true;
@@ -47,6 +48,10 @@ public class EtudiantDAO {
                 e.setMatricule(rs.getString("matricule"));
                 e.setFiliere(rs.getString("filiere"));
                 e.setTelephone(rs.getString("telephone"));
+                java.sql.Date dateSQL = rs.getDate("date_naissance");
+                if (dateSQL != null) {
+                    e.setDateNaissance(dateSQL.toLocalDate());
+                }
                 return e;
             }
 
@@ -73,6 +78,10 @@ public class EtudiantDAO {
                 e.setMatricule(rs.getString("matricule"));
                 e.setFiliere(rs.getString("filiere"));
                 e.setTelephone(rs.getString("telephone"));
+                java.sql.Date dateSQL = rs.getDate("date_naissance");
+                if (dateSQL != null) {
+                    e.setDateNaissance(dateSQL.toLocalDate());
+                }
                 list.add(e);
             }
 

@@ -16,7 +16,8 @@ public class DatabaseMigration {
                     "prenom VARCHAR(50) NOT NULL," +
                     "matricule VARCHAR(20) NOT NULL UNIQUE," +
                     "filiere VARCHAR(50)," +
-                    "telephone VARCHAR(20)" +
+                    "telephone VARCHAR(20)," +
+                    "date_naissance DATE" +
                     ")";
 
             stmt.executeUpdate(sql);
